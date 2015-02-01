@@ -1,172 +1,295 @@
-<!DOCTYPE HTML>
-<!--
-	Alpha by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Alpha by HTML5 UP</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.dropotron.min.js"></script>
-		<script src="js/jquery.scrollgress.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-layers.min.js"></script>
-		<script src="js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-wide.css" />
-		</noscript>
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-	</head>
-	<body class="landing">
+    <head>
+        <title>jQuery Knob demo</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+        <script src="dist/jquery.knob.min.js"></script>
+        <script>
+            $(function($) {
 
-		<!-- Header -->
-			<header id="header" class="alt">
-				<h1><a href="index.html">Alpha</a> by HTML5 UP</h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li>
-							<a href="" class="icon fa-angle-down">Layouts</a>
-							<ul>
-								<li><a href="generic.html">Generic</a></li>
-								<li><a href="contact.html">Contact</a></li>
-								<li><a href="elements.html">Elements</a></li>
-								<li>
-									<a href="">Submenu</a>
-									<ul>
-										<li><a href="#">Option One</a></li>
-										<li><a href="#">Option Two</a></li>
-										<li><a href="#">Option Three</a></li>
-										<li><a href="#">Option Four</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="#" class="button">Sign Up</a></li>
-					</ul>
-				</nav>
-			</header>
+                $(".knob").knob({
+                    change : function (value) {
+                        //console.log("change : " + value);
+                    },
+                    release : function (value) {
+                        //console.log(this.$.attr('value'));
+                        console.log("release : " + value);
+                    },
+                    cancel : function () {
+                        console.log("cancel : ", this);
+                    },
+                    /*format : function (value) {
+                        return value + '%';
+                    },*/
+                    draw : function () {
 
-		<!-- Banner -->
-			<section id="banner">
-				<h2>Alpha</h2>
-				<p>Another fine responsive site template freebie by HTML5 UP.</p>
-				<ul class="actions">
-					<li><a href="#" class="button special">Sign Up</a></li>
-					<li><a href="#" class="button">Learn More</a></li>
-				</ul>
-			</section>
+                        // "tron" case
+                        if(this.$.data('skin') == 'tron') {
 
-		<!-- Main -->
-			<section id="main" class="container">
+                            this.cursorExt = 0.3;
 
-				<section class="box special">
-					<header class="major">
-						<h2>Introducing the ultimate mobile app
-						<br />
-						for doing stuff with your phone</h2>
-						<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-						adipiscing nunc adipiscing. Condimentum turpis massa.</p>
-					</header>
-					<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-				</section>
+                            var a = this.arc(this.cv)  // Arc
+                                , pa                   // Previous arc
+                                , r = 1;
 
-				<section class="box special features">
-					<div class="features-row">
-						<section>
-							<span class="icon major fa-bolt accent2"></span>
-							<h3>Magna etiam</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-						<section>
-							<span class="icon major fa-area-chart accent3"></span>
-							<h3>Ipsum dolor</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-					</div>
-					<div class="features-row">
-						<section>
-							<span class="icon major fa-cloud accent4"></span>
-							<h3>Sed feugiat</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-						<section>
-							<span class="icon major fa-lock accent5"></span>
-							<h3>Enim phasellus</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						</section>
-					</div>
-				</section>
+                            this.g.lineWidth = this.lineWidth;
 
-				<div class="row">
-					<div class="6u 12u(narrower)">
+                            if (this.o.displayPrevious) {
+                                pa = this.arc(this.v);
+                                this.g.beginPath();
+                                this.g.strokeStyle = this.pColor;
+                                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
+                                this.g.stroke();
+                            }
 
-						<section class="box special">
-							<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-							<h3>Sed lorem adipiscing</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-							<ul class="actions">
-								<li><a href="#" class="button alt">Learn More</a></li>
-							</ul>
-						</section>
+                            this.g.beginPath();
+                            this.g.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
+                            this.g.stroke();
 
-					</div>
-					<div class="6u 12u(narrower)">
+                            this.g.lineWidth = 2;
+                            this.g.beginPath();
+                            this.g.strokeStyle = this.o.fgColor;
+                            this.g.arc( this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+                            this.g.stroke();
 
-						<section class="box special">
-							<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-							<h3>Accumsan integer</h3>
-							<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-							<ul class="actions">
-								<li><a href="#" class="button alt">Learn More</a></li>
-							</ul>
-						</section>
+                            return false;
+                        }
+                    }
+                });
 
-					</div>
-				</div>
+                // Example of infinite knob, iPod click wheel
+                var v, up=0,down=0,i=0
+                    ,$idir = $("div.idir")
+                    ,$ival = $("div.ival")
+                    ,incr = function() { i++; $idir.show().html("+").fadeOut(); $ival.html(i); }
+                    ,decr = function() { i--; $idir.show().html("-").fadeOut(); $ival.html(i); };
+                $("input.infinite").knob(
+                                    {
+                                    min : 0
+                                    , max : 20
+                                    , stopper : false
+                                    , change : function () {
+                                                    if(v > this.cv){
+                                                        if(up){
+                                                            decr();
+                                                            up=0;
+                                                        }else{up=1;down=0;}
+                                                    } else {
+                                                        if(v < this.cv){
+                                                            if(down){
+                                                                incr();
+                                                                down=0;
+                                                            }else{down=1;up=0;}
+                                                        }
+                                                    }
+                                                    v = this.cv;
+                                                }
+                                    });
+            });
+        </script>
+        <style>
+            body{
+              padding: 0;
+              margin: 0px 50px;
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              font-weight: 300;
+              text-rendering: optimizelegibility;
+            }
+            p{font-size: 30px; line-height: 30px}
+            div.demo{text-align: center; width: 280px; float: left}
+            div.demo > p{font-size: 20px}
+        </style>
+    </head>
+    <body>
+        <div style="width:100%;font-size:40px;letter-spacing:-8px;line-height:40px;"></div>
+        <div>        </div>
+        <div class="demo">
+            <p>&#215; Disable display input</p>
+            <pre>
+data-width="100"
+data-displayInput=false
+            </pre>
+            <input class="knob" data-width="100" data-displayInput=false value="35">
+        </div>
+        <div class="demo">
+            <p>&#215; 'cursor' mode</p>
+            <pre>
+data-width="150"
+data-cursor=true
+data-thickness=.3
+data-fgColor="#222222"
+            </pre>
+            <input class="knob" data-width="150" data-cursor=true data-fgColor="#222222" data-thickness=.3 value="29">
+        </div>
+        <div class="demo" >
+            <p>&#215; Display previous value</p>
+            <pre>
+data-displayPrevious=true
+data-min="-100"
+            </pre>
+            <input class="knob" data-width="200" data-min="-100" data-displayPrevious=true value="44">
+        </div>
+        <div style="clear:both"></div>
+        <div class="demo">
+            <p>&#215; Angle offset</p>
+            <pre>
+data-angleOffset=90
+data-linecap=round
+            </pre>
+            <input class="knob" data-angleOffset=90 data-linecap=round value="35">
+        </div>
+        <div class="demo">
+            <p>&#215; Angle offset and arc</p>
+            <pre>
+data-fgColor="#66CC66"
+data-angleOffset=-125
+data-angleArc=250
+data-rotation=anticlockwise
+            </pre>
+            <input class="knob" data-angleOffset=-125 data-angleArc=250 data-fgColor="#66EE66" data-rotation="anticlockwise" value="35">
+        </div>
+        <div class="demo" >
+            <p>&#215; 4-digit, step 0.1</p>
+            <pre>
+data-step=".1"
+data-min="-10000"
+data-max="10000"
+value="0"
+data-displayPrevious=true
+            </pre>
+            <input class="knob" data-min="-10000" data-displayPrevious=true data-max="10000" data-step=".1" value="0">
+        </div>
+        <div style="clear:both"></div>
+        <div style="text-align: center">
+            <p style="font-size: 20px">&#215; Overloaded 'draw' method</p>
+        </div>
+        <div style="background-color: #222; height: 340px">
+            <div class="demo" style="background-color:#222; color:#FFF;">
+                <pre>
+    data-width="75"
+    data-fgColor="#ffec03"
+    data-skin="tron"
+    data-thickness=".2"
+    data-displayPrevious=true
+                </pre>
+                <input class="knob" data-width="75" data-displayPrevious=true data-fgColor="#ffec03" data-skin="tron" data-cursor=true value="75" data-thickness=".2">
+            </div>
+            <div class="demo" style="background-color:#222; color:#FFF;">
+                <pre>
+    data-width="150"
+    data-fgColor="#ffec03"
+    data-skin="tron"
+    data-thickness=".2"
+    data-displayPrevious=true
+                </pre>
+                <input class="knob" data-width="150" data-displayPrevious=true data-fgColor="#ffec03" data-skin="tron" data-thickness=".2" value="75">
+            </div>
+            <div class="demo" style="background-color:#222; color:#FFF;">
+                <pre>
+    data-width="150"
+    data-fgColor="#C0ffff"
+    data-skin="tron"
+    data-thickness=".1"
+    data-angleOffset="180"
+                </pre>
+                <input class="knob" data-width="150" data-angleOffset="180" data-fgColor="#C0ffff" data-skin="tron" data-thickness=".1" value="35">
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="demo" style="width:100%">
+            <p>&#215; Responsive</p>
+            <pre>
+data-width="80%"
+            </pre>
+            <div style="width: 30%; border: 3px dashed; margin-bottom: 20px">
+                <i>
+                    Current div width is 30% of window width.<br>
+                    Knob width is 80% of current div.<br>
+                    Knob width is 80% of 30% of window width.<br>
+                    Test resizing window.
+                </i>
+                <br>
+                <br>
+                <input class="knob" data-width="80%" value="35">
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <script>
+        function clock() {
+            var $s = $(".second"),
+                $m = $(".minute"),
+                $h = $(".hour");
+                d = new Date(),
+                s = d.getSeconds(),
+                m = d.getMinutes(),
+                h = d.getHours();
+            $s.val(s).trigger("change");
+            $m.val(m).trigger("change");
+            $h.val(h).trigger("change");
+            setTimeout("clock()", 1000);
+        }
+        clock();
+        </script>
+        <div class="demo" style="color:#EEE;background:#222;height:420px;width:100%">
+            <p>&#215; Superpose (clock)</p>
+            <div style="position:relative;width:350px;margin:auto">
+                <div style="position:absolute;left:10px;top:10px">
+                    <input class="knob hour" data-min="0" data-max="24" data-bgColor="#333" data-fgColor="#ffec03" data-displayInput=false data-width="300" data-height="300" data-thickness=".3">
+                </div>
+                <div style="position:absolute;left:60px;top:60px">
+                    <input class="knob minute" data-min="0" data-max="60" data-bgColor="#333" data-displayInput=false data-width="200" data-height="200" data-thickness=".45">
+                </div>
+                <div style="position:absolute;left:110px;top:110px">
+                    <input class="knob second" data-min="0" data-max="60" data-bgColor="#333" data-fgColor="rgb(127, 255, 0)" data-displayInput=false data-width="100" data-height="100" data-thickness=".3">
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="demo">
+            <p>&#215; Readonly</p>
+            <pre>
+readonly (or data-readOnly=true)
+data-thickness=".4"
+data-fgColor="chartreuse"
+            </pre>
+            <input class="knob" data-fgColor="chartreuse" data-thickness=".4" readonly value="22">
+        </div>
+        <div class="demo">
+            <p>&#215; Dynamic</p>
+            <pre>
+data-width="200"
+            </pre>
+            <input type="button" onclick="$('.knob-dyn').knob();" value="knobify!">
+            <input type="text" class="knob-dyn" data-width="200" data-cursor=true value="56">
+            <pre>
+data-width="50"
+data-cursor=true
+            </pre>
+            <input type="button" onclick="$('.knob-dyn2').knob();" value="knobify!">
+            <input type="text" class="knob-dyn2" data-width="50" data-thickness=".4" value="56">
+        </div>
+        <div class="demo" style="height:440px;width:300px">
+            <p>&#215; Infinite || iPod click wheel</p>
+            <div style="float:left;width:180px;height:320px;padding:20px;background-color:#EEEEEE;text-align:center;">
+                <pre>
+data-width="150"
+data-cursor=true
+data-thickness=".5"
+data-fgColor="#AAAAAA"
+data-bgColor="#FFFFFF"
+data-displayInput="false"
++ some code
+                </pre>
+                <input class="infinite" value="0" data-width="150" data-thickness=".5" data-fgColor="#AAAAAA" data-bgColor="#FFFFFF" data-displayInput="false" data-cursor=true>
+            </div>
+            <div style="float:left;margin-top:200px;">
+                <div class="ival" style="width:80px;text-align:center;font-size:50px;color:#AAA">0</div>
+                <div class="idir" style="width:80px;text-align:center;font-size:50px;"></div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
 
-			</section>
-
-		<!-- CTA -->
-			<section id="cta">
-
-				<h2>Sign up for beta access</h2>
-				<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-
-				<form>
-					<div class="row uniform 50%">
-						<div class="8u 12u(mobilep)">
-							<input type="email" name="email" id="email" placeholder="Email Address" />
-						</div>
-						<div class="4u 12u(mobilep)">
-							<input type="submit" value="Sign Up" class="fit" />
-						</div>
-					</div>
-				</form>
-
-			</section>
-
-		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-					<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-					<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
-
-	</body>
+    </body>
 </html>
