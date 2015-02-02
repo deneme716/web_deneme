@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<Guestbook>
+  <Entry>
+    <ID>0</ID>
+    <Name>John</Name>
+    <Date>2002-11-27T07:32:50.6394624+02:00</Date>
+    <Message>I hope you like our guestbook!</Message>
+  </Entry>
+  <Entry>
+    <ID>0</ID>
+    <Name>qq</Name>
+    <Date>2015-02-02T02:29:06.8620841+02:00</Date>
+    <Message>qqq</Message>
+  </Entry>
+  <Entry>
+    <ID>0</ID>
+    <Name>qqqqqq</Name>
+    <Date>2015-02-02T02:29:19.1397864+02:00</Date>
+    <Message>qqq11111111</Message>
+  </Entry>
+  <Entry>
+    <ID>0</ID>
+    <Name>aaa</Name>
+    <Date>2015-02-02T02:31:10.2731428+02:00</Date>
+    <Message>aaa</Message>
+  </Entry>
+</Guestbook>
